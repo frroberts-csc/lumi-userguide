@@ -32,9 +32,10 @@ First your person has to be identified within PUHURI. This process is generally 
 
 Using your browser, you access this invitation link several times for several registration steps (accepting invitation, creating MyAccessId account, accepting terms and conditions and privacy) until your personal identity builds up required properties, at which point CSC.FI creates a corresponding project and your new LUMI username and sends you email notifying you. Within about an hour or two after receiving this email, you should be able to SSH in into a LUMI login node. See section "How to log in" below.
 
-Please note that you will not be asked for or provided with LUMI account password. LUMI access does not use password authenticaion. It uses authentication via SSH keys only.
+Please note that you will not be asked for or provided with LUMI account password. LUMI access does not use password authenticaion. It uses authentication via SSH *public* key only. Its corresponding *private* key should be protected by a passphrase (explained below) which you and only you should know, as it becomes the gateway to your LUMI access authorization.
 
 As you create MyAccessId account, you are required to upload your SSH public key. If you are unsure what it is or how it works, see the "Setting up SSH key pair" section below.
+
 
 ### Summary of identity registration steps:
 
@@ -76,14 +77,12 @@ informing you of your project ID and user account name.
 
 ## Setting up SSH key pair
 
-**You can only log in to LUMI using SSH keys**. There are no passwords. In order for this to work, you need to register your SSH key with MyAccessID, from where LUMI will fetch it.
+**You can only log in to LUMI using SSH keys**. There are no passwords in the LUMI system. In order for this to work, you need to register your SSH *public* key with MyAccessID, from where LUMI will fetch it.
 
 
 ### Generate your SSH keys
 
-After registration, you need to register a **public** key (**Note! Key must be RSA
-4K bits or elliptic curve**). In order to do that
-you need to generate an SSH key pair.
+After registration, you need to register a **public** key (**Note! The SSH key pair must be a 4096-bit RSA or elliptic curve type key pair**). In order to do that you need to generate an SSH key pair. How to generate 4096-bit RSA key pair:
 
 === "From a terminal (all OS)"
 
@@ -153,25 +152,26 @@ you need to generate an SSH key pair.
     Please read carefuly the following note
     
 !!! warning "Note"
-    Please choose a secure passphrase. Remember that a good passphrase does not have
+    Please choose a secure passphrase. Keep in mind that a good passphrase does not have
     to be a hard one to remember.
     
     Those of you who fancy an occasional computability calculation can appreciate
     [this][bad-complex-password] explanation, while others can take our word for it.
     
     You may prefer not to use contrapted passwords that are difficult to remember.
-    Make sure that the passphrase is at least 20 characters and easy to remember.
+    Make sure that the passphrase is at least 20 characters long and easy to remember.
     
     Example of a good passphrase generator is [here][correcthorsebatterystaple].
 
     Note for the security extra-cautious people: Any online website that sends you a password
     (like the [correcthorsebatterystaple.com][correcthorsebatterystaple] generator), or
-    receives from you a password, should be accessed in goole-agnostic and facebook-agnostic
+    receives from you a password, should be accessed in google-agnostic and facebook-agnostic
     and other-privacy-endangering-giant-agnostic ways, such as with cleared
     cookies in your browser or better yet, clear of all traceable information (including IP address),
     like using the [Tor browser][torproject]. Otherwise you are risking that these nonprivacy
-    giants will on top of your usernames also know your passwords to various online
-    services or offline files, like your new private SSH key.
+    giants will on top of your usernames also know your where and when you generated passwords
+    (and therefore possibly which) to various online services or offline files,
+    like your new private SSH key.
     
     **Do not leave the passphrase empty**.
     
@@ -181,18 +181,19 @@ you need to generate an SSH key pair.
     
     **Do not give this passphrase to anyone.**
     
-    **Do not include this passphrase in any support requests.** (There is no legitimate
-    use of this passphrase by any support personnel, at any time. Report anyone asking
-    you to give them your passphrase or password, immediately please.)
+    **Do not include this passphrase, or the private key, in any support requests.**
+    (There is no legitimate use of this passphrase by any support personnel, at any time.
+    Report anyone asking you to give them your passphrase or password, immediately, please.)
 
-    The private key, with or without passphrase, should never be shared with anyone, not even with
-    LUMI staff. It should also be stored only in the local computer (public key
-    can be safely stored in cloud services). Protect it with a good password! Otherwise, anyone with access to the file system can steal your SSH key.
+    The SSH private key, with or without passphrase, should never be shared with anyone,
+    not even with LUMI staff. It should also be stored only in the local computer (public key
+    can be safely transmitted to any public place). Protect the private key with a good passphrase!
+    Otherwise, anyone with access to the file system can steal your SSH key.
 
 ### Upload your public key 
  
-Now that you have generated your key pair, you need to set up your **public** key
-in your [user profile][myaccessid-profile]. From there, the public key will be 
+Now that you have generated your key pair, you need to upload your SSH **public** key
+into your [user profile][myaccessid-profile]. From there, the SSH public key will be 
 copied to LUMI with some delay according to the synchronization schedule. This schedule
 is currently at once every 10 minutes.
 
